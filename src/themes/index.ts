@@ -5,9 +5,8 @@ export const theme = createMuiTheme({
 	palette: {
 		primary: {
 			main: amber[400]
-		},
-		background: {
-			default: amber[50]
 		}
 	}
 });
+
+export { default as yelli } from "./yelli";

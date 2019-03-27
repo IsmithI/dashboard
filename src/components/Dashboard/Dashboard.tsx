@@ -1,19 +1,45 @@
 import * as React from "react";
-import { Grid, withStyles, createStyles, WithStyles } from "@material-ui/core";
+import { Grow, Typography, Button } from "@material-ui/core";
+import { Delayed } from "../common/Delayed";
 import { DigitalClock } from "./Widgets";
+import { Container, Item } from "../common/Grid";
 
-const styles = createStyles({
-	root: {
-		padding: '0.5em'
-	}
-})
+export const Dashboard = () => (
+	<Container direction="column" justify="space-between">
+		<Container spacing={8} direction="column" alignItems="stretch">
+			{components.map((component: React.ReactNode, i: number) => (
+				<Item key={i}>
+					<Container>
+						<Item>
+							<Delayed time={200 + i * 50}>
+								<Grow in={true} timeout={400}>
+									{component}
+								</Grow>
+							</Delayed>
+						</Item>
+					</Container>
+				</Item>
+			))}
+		</Container>
+		<Container spacing={8}>
+			<Item>
+				<Button variant="contained" color="secondary">
+					H
+				</Button>
+			</Item>
+			<Item>
+				<Button variant="contained" color="secondary">
+					B
+				</Button>
+			</Item>
+		</Container>
+	</Container>
+);
 
-export const Dashboard = withStyles(styles)(({ classes }: WithStyles<typeof styles>) => (
-	<div className={classes.root}>
-		<Grid container spacing={32}>
-			<Grid item>
-				<DigitalClock />
-			</Grid>
-		</Grid>
-	</div>
-));
+const components = [
+	<DigitalClock />,
+	<Typography variant="h3">Time</Typography>,
+	<Button variant="contained" color="primary" size="large" component="h2">
+		GO!
+	</Button>
+];

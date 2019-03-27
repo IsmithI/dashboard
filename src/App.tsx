@@ -9,9 +9,9 @@ class App extends React.Component {
 	render() {
 		return (
 			<MuiThemeProvider theme={theme}>
-				<ApplicationContainer>
-					<ApplicationRouter />
-				</ApplicationContainer>
+			<ApplicationContainer>
+				<ApplicationRouter />
+			</ApplicationContainer>
 			</MuiThemeProvider>
 		);
 	}

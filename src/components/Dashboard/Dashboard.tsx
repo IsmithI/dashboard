@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Grow, Typography, Button } from "@material-ui/core";
 import { Delayed } from "../common/Delayed";
-import { DigitalClock } from "./Widgets";
+import { DigitalClock, TodoList } from "./Widgets";
 import { Container, Item } from "../common/Grid";
 
 export const Dashboard = () => (
@@ -39,7 +39,5 @@ export const Dashboard = () => (
 const components = [
 	<DigitalClock />,
 	<Typography variant="h3">Time</Typography>,
-	<Button variant="contained" color="primary" size="large" component="h2">
-		GO!
-	</Button>
+	<TodoList/>,
 ];

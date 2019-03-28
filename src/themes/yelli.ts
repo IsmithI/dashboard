@@ -1,11 +1,10 @@
 import { createMuiTheme } from "@material-ui/core";
-import { yellow, grey } from "@material-ui/core/colors";
+import { yellow } from "@material-ui/core/colors";
 
 export default createMuiTheme({
 	palette: {
 		primary: {
 			main: '#000',
-			light: grey[400],
 			contrastText: '#fff'
 		},
 		secondary: {
@@ -19,7 +18,7 @@ export default createMuiTheme({
 	},
 	typography: {
 		h3: {
-			fontWeight: 600
+			fontWeight: 500
 		}
 	},
 	shape: {

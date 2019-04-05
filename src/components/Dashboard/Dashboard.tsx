@@ -21,7 +21,7 @@ export const Dashboard = withWidth()(({ width }: IDashboardProps) => {
 		: {
 				direction: "row",
 				alignItems: "center",
-				justify: "space-between"
+				justify: "center"
 		  };
 
 	return (
@@ -30,7 +30,7 @@ export const Dashboard = withWidth()(({ width }: IDashboardProps) => {
 				{components.map((widget: IWidget, i: number) => {
 					const grow = widget.grow || 'auto';
 					return (
-						<Grid item key={widget.id} xs={grow >= 6 ? 12 : 'auto'} sm={grow >= 6 ? true : grow}>
+						<Grid item key={widget.id} xs={grow >= 6 ? 12 : 'auto'} sm={grow >= 6 ? true : grow} md={grow}>
 							<Delayed time={100 + i * 50}>
 								{show => (
 									<Grow in={show} timeout={400}>

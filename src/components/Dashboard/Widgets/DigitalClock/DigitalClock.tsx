@@ -14,7 +14,6 @@ import { PaperProps } from "@material-ui/core/Paper";
 const styles = createStyles({
 	content: {
 		padding: "0.8em",
-		minWidth: 210
 	}
 });
 
@@ -33,8 +32,8 @@ export const DigitalClock = withStyles(styles)(
 		return (
 			<Paper className={classes.content} {...props}>
 				<Grid container direction="column" alignItems='center'>
-					<Grid item xs={12}>
-						<Typography variant="h3">
+					<Grid item>
+						<Typography variant="h4">
 							{time.getHours()}:{startsWithZero(time.getMinutes())}:
 							{startsWithZero(time.getSeconds())}
 						</Typography>

@@ -1,65 +1,78 @@
 import * as React from "react";
 import Card, { CardProps } from "@material-ui/core/Card";
-import {
-	CardHeader,
-	IconButton,
-	Icon,
-	CardContent,
-	ListItem,
-	List,
-	ListItemText,
-	Checkbox,
-	Typography
-} from "@material-ui/core";
-import { get } from "../../../../utils";
+import { CardHeader, IconButton, Icon, ListItem, List, Checkbox, Typography, Collapse } from "@material-ui/core";
+import { observer, inject } from "mobx-react";
+import { ITodoStore } from "../../../../stores/todoStore";
+import { AddItemModal } from "./AddItemModal";
+import { Container, Item } from "../../../common/Grid";
 
-export interface ITodoListProps extends CardProps {}
-
-interface ITodoListState {
-	list: ITodoItem[];
+export interface ITodoListProps extends CardProps {
+	todoStore?: ITodoStore;
 }
 
-export class TodoList extends React.Component<ITodoListProps, ITodoListState> {
-	state: ITodoListState = {
-		list: []
+@inject("todoStore")
+@observer
+export class TodoList extends React.Component<ITodoListProps> {
+	state = {
+		modalIsOpen: false
 	};
 
 	render() {
-		const { list } = this.state;
+		const { todoStore, ...props } = this.props;
 
 		return (
-			<Card>
-				<CardHeader
-					title="ToDo List"
-					action={
-						<IconButton color="primary">
-							<Icon>add_circle</Icon>
-						</IconButton>
-					}
-				/>
-				<CardContent>
-					<List>
-						{list.map(item => (
-							<ListItem>
-								<ListItemText>
-									<Checkbox />
-									<Typography>{item.text}</Typography>
-								</ListItemText>
-							</ListItem>
-						))}
-					</List>
-				</CardContent>
-			</Card>
+			todoStore && (
+				<>
+					<Card {...props}>
+						<CardHeader
+							title="ToDo List"
+							action={
+								<IconButton color="primary" onClick={this.openModal}>
+									<Icon>add_circle</Icon>
+								</IconButton>
+							}
+						/>
+						<List disablePadding>
+							<Collapse in={todoStore.items.length > 0}>
+								{todoStore.items.map(item => (
+									<ListItem key={item._id}>
+										<Container wrap={false} justify="space-between" flex={1}>
+											<Container wrap={false} alignItems="center" flex={1}>
+												<Item>
+													<Checkbox color="primary" />
+												</Item>
+												<Item grow={1}>
+													<Typography>{item.title}</Typography>
+												</Item>
+											</Container>
+											<Item>
+												<IconButton>
+													<Icon>delete</Icon>
+												</IconButton>
+											</Item>
+										</Container>
+									</ListItem>
+								))}
+							</Collapse>
+						</List>
+					</Card>
+					<AddItemModal isOpen={this.state.modalIsOpen} onClose={this.closeModal} />
+				</>
+			)
 		);
 	}
 
-	componentDidMount = () => {
-		get<ITodoItem[]>("/todo").then(res => this.setList(res.payload));
+	setModalState = (modalIsOpen: boolean) => this.setState({ modalIsOpen });
+
+	openModal = () => {
+		this.setModalState(true);
 	};
 
-	setList = (list: ITodoItem[]) => this.setState({ list });
-}
+	closeModal = () => {
+		this.setModalState(false);
+	};
 
-interface ITodoItem {
-	text: string;
+	componentDidMount = () => {
+		if (this.props.todoStore) this.props.todoStore.loadItems();
+	};
 }

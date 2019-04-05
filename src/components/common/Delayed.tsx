@@ -1,9 +1,9 @@
 import * as React from "react";
-import { IHasChildren } from "../../interfaces";
 import { useState, useEffect } from "react";
 
-export interface IDelayedProps extends IHasChildren {
+export interface IDelayedProps {
 	time: number;
+	children: (show: boolean) => React.ReactNode;
 }
 
 export const Delayed = ({ children, time }: IDelayedProps) => {
@@ -14,5 +14,5 @@ export const Delayed = ({ children, time }: IDelayedProps) => {
 		return () => clearTimeout(id);
 	});
  
-	return show ? <>{children}</> : <></>;
+	return <>{children(show)}</>;
 };

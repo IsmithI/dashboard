@@ -1,9 +1,13 @@
 import * as React from 'react';
 
+type Justify = 'center' | 'flex-start' | 'flex-end' | 'space-around' | 'space-between' | 'space-evenly' | 'stretch';
+type AlignItems = 'center' | 'flex-start' | 'flex-end' | 'space-around' | 'space-between' | 'space-evenly' | 'stretch';
+type Direction = 'row' | 'row-reverse' | 'column' | 'column-reverse';
+
 export interface IContainer {
-	justify?: 'center' | 'flex-start' | 'flex-end' | 'space-around' | 'space-between' | 'space-evenly' | 'stretch';
-	alignItems?: 'center' | 'flex-start' | 'flex-end' | 'space-around' | 'space-between' | 'space-evenly' | 'stretch';
-	direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+	justify?: Justify;
+	alignItems?: AlignItems;
+	direction?: Direction;
 	spacing?: string | number;
 	style?: any;
 	className?: string;

@@ -1,11 +1,11 @@
 interface TypedResponse<T = any> extends Response {
-  /**
-   * this will override `json` method from `Body` that is extended by `Response`
-   * interface Body {
-   *     json(): Promise<any>;
-   * }
-   */
-  json<P = T>(): Promise<P>
+	/**
+	 * this will override `json` method from `Body` that is extended by `Response`
+	 * interface Body {
+	 *     json(): Promise<any>;
+	 * }
+	 */
+	json<P = T>(): Promise<P>;
 }
 
 interface Payload<T> {
@@ -13,12 +13,15 @@ interface Payload<T> {
 	payload: T;
 }
 
-declare function fetch<T>(...args: any): Promise<TypedResponse<T>>
+declare function fetch<T>(...args: any): Promise<TypedResponse<T>>;
 
-export const get = <T>(url: string) => fetch<Payload<T>>(url).then(res => res.json());
+export const get = <T>(url: string) => fetch<Payload<T>>(url).then(res => res.json().then(data => data.payload as T));
 
-export const put = (url: string, data: any) =>
-	fetch(url, {
+export const put = <T>(url: string, data: any) =>
+	fetch<Payload<T>>(url, {
 		method: "put",
-		body: JSON.stringify(data)
-	}).then(res => res.json());
+		body: JSON.stringify(data),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	}).then(res => res.json().then(data => data.payload as T));

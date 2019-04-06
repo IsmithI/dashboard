@@ -6,6 +6,7 @@ import { WithWidth } from "@material-ui/core/withWidth";
 import { IWidget } from "../../interfaces";
 import { Delayed } from "../common/Delayed";
 import { GridProps } from "@material-ui/core/Grid";
+import { Weather } from "./Widgets/Weather/Weather";
 
 interface IDashboardProps extends WithWidth {}
 
@@ -69,5 +70,10 @@ const components: IWidget[] = [
 		id: "todo_list",
 		component: <TodoList />,
 		grow: 6
+	},
+	{
+		id: 'weather',
+		component: <Weather/>,
+		grow: 3
 	}
 ];

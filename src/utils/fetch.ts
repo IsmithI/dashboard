@@ -15,9 +15,11 @@ interface Payload<T> {
 
 declare function fetch<T>(...args: any): Promise<TypedResponse<T>>;
 
-export const get = <T>(url: string) => fetch<Payload<T>>(url).then(res => res.json().then(data => data.payload as T));
+export const restGet = <T extends any>(url: string) => fetch<T>(url).then(res => res.json().then(data => data as T));
 
-export const put = <T>(url: string, data: any) =>
+export const get = <T extends any>(url: string) => fetch<Payload<T>>(url).then(res => res.json().then(data => data.payload as T));
+
+export const put = <T extends any>(url: string, data: any) =>
 	fetch<Payload<T>>(url, {
 		method: "put",
 		body: JSON.stringify(data),

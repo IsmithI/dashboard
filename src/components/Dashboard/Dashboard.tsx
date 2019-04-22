@@ -29,20 +29,18 @@ export const Dashboard = withWidth()(({ width }: IDashboardProps) => {
 		<Container direction="column" wrap={false} justify="center" alignItems="stretch">
 			<Grid container {...containerProps}>
 				{components.map((widget: IWidget, i: number) => {
-					const grow = widget.grow || 'auto';
+					const grow = widget.grow || "auto";
 					return (
-						<Grid item key={widget.id} xs={grow >= 6 ? 12 : 'auto'} sm={grow >= 6 ? true : grow} md={grow}>
+						<Grid item key={widget.id} xs={grow >= 6 ? 12 : "auto"} sm={grow >= 6 ? true : grow} md={grow}>
 							<Delayed time={100 + i * 50}>
 								{show => (
 									<Grow in={show} timeout={400}>
-										<div style={{ padding: '0.8em'}}>
-											{widget.component}
-										</div>
+										<div style={{ padding: "0.8em" }}>{widget.component}</div>
 									</Grow>
 								)}
 							</Delayed>
 						</Grid>
-					)
+					);
 				})}
 			</Grid>
 			<Container spacing={8}>
@@ -64,16 +62,20 @@ export const Dashboard = withWidth()(({ width }: IDashboardProps) => {
 const components: IWidget[] = [
 	{
 		id: "digital_clock",
-		component: <DigitalClock />,
+		component: (
+			<Grid container direction='column' spacing={8}>
+				<Grid item>
+					<DigitalClock />
+				</Grid>
+				<Grid item>
+					<Weather />
+				</Grid>
+			</Grid>
+		)
 	},
 	{
 		id: "todo_list",
 		component: <TodoList />,
 		grow: 6
-	},
-	{
-		id: 'weather',
-		component: <Weather/>,
-		grow: 3
 	}
 ];
